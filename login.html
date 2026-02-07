@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="bg-gray-50">
+
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+
+            <div class="p-6 text-center">
+                <div class="mx-auto mb-4 flex h-20 w-auto items-center justify-center">
+                    <img src="logo.png" alt="Library Logo" class="h-16 w-auto object-contain">
+                </div>
+                <h2 class="text-2xl font-bold text-gray-900">Library Management System</h2>
+                <p class="text-sm text-gray-500">Sign in to access the campus library</p>
+            </div>
+
+            <div class="p-6 pt-0">
+                <div id="error-alert"
+                    class="hidden mb-4 p-3 rounded-lg bg-red-50 border border-red-200 flex items-center gap-3 text-red-800">
+                    <i data-lucide="alert-circle" class="h-4 w-4"></i>
+                    <span id="error-message" class="text-sm font-medium"></span>
+                </div>
+
+                <form id="login-form" class="space-y-4">
+                    <div class="space-y-2">
+                        <label for="username" class="text-sm font-medium leading-none">Username</label>
+                        <input id="username" type="text" placeholder="Enter username" required
+                            class="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1 transition-all">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="password" class="text-sm font-medium leading-none">Password</label>
+                        <input id="password" type="password" placeholder="Enter password" required
+                            class="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1 transition-all">
+                    </div>
+
+                    <button id="submit-btn" type="submit"
+                        class="w-full inline-flex items-center justify-center rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 focus:outline-none disabled:opacity-50 transition-colors shadow-sm">
+                        Sign In
+                    </button>
+                </form>
+
+                <div class="mt-6 rounded-lg bg-gray-100 p-4 border border-gray-200">
+                    <p class="text-sm font-semibold text-gray-700 mb-2">Login Access:</p>
+                    <div class="space-y-1 text-xs text-gray-600">
+                        <p><span class="font-bold text-green-700">Admin:</span> admin / admin</p>
+                        <p><span class="font-bold text-green-700">Student:</span> user / user</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        const loginForm = document.getElementById('login-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const errorAlert = document.getElementById('error-alert');
+        const errorMessage = document.getElementById('error-message');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            errorAlert.classList.add('hidden');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Verifying...";
+
+            // Simulate network delay
+            await new Promise(resolve => setTimeout(resolve, 600));
+
+            // Fixed Authentication Logic
+            if (username === "admin" && password === "admin") {
+                window.location.href = "http://localhost:8000/main.php";
+            } 
+            else if (username === "user" && password === "user") {
+                window.location.href = "http://localhost:8000/user.php";
+            } 
+            else {
+                // Show error if neither matches
+                errorMessage.innerText = "Invalid username or password";
+                errorAlert.classList.remove('hidden');
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Sign In";
+            }
+        });
+    </script>
+</body>
+
+</html>
